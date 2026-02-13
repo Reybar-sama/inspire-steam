@@ -47,6 +47,9 @@ updated_balance = int(cleaned_balance) + int(cleaned_amount_added)
 
 print(f"Updated Balance: ", updated_balance)
 
-message = f"{mpesa_code}. Confirmed. {cleaned_amount_added} KES has been added to your account by {sentence_2}. New balance is {updated_balance} KES."
+from datetime import datetime 
+today = datetime.today()
+
+message = f"{mpesa_code}. Confirmed. {cleaned_amount_added} KES has been added to your account by {sentence_2} at {today} . New balance is {updated_balance} KES."
 
 print(message)
