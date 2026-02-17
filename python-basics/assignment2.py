@@ -50,6 +50,22 @@ print(f"Updated Balance: ", updated_balance)
 from datetime import datetime 
 today = datetime.today()
 
-message = f"{mpesa_code}. Confirmed. {cleaned_amount_added} KES has been added to your account by {sentence_2} at {today} . New balance is {updated_balance} KES."
+import random
+import string
+
+def generate_random_alphanumeric(length):
+  """Generates a random string of uppercase letters and digits of a specified length."""
+  characters = string.ascii_uppercase + string.digits
+  # random.choices returns a list, which is then joined into a string
+  result = ''.join(random.choices(characters, k=length))
+  return result
+
+# Example usage:
+random_id = generate_random_alphanumeric(10)
+print(random_id) 
+
+
+
+message = f"{random_id}. Confirmed. {cleaned_amount_added} KES has been added to your account by {sentence_2} at {today} . New balance is {updated_balance} KES."
 
 print(message)
