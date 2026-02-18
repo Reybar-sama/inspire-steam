@@ -2,6 +2,8 @@
 # Date : 17/02/2026
 # Drawing of a diamond, triangle and solving quadratic equations.
 
+# Part A: Quadratic Equation
+
 import math
 
 def solve_quadratic(a, b ,c):
@@ -27,3 +29,6 @@ c = float(input("Enter coefficient 'c': "))
 
 roots = solve_quadratic(a, b, c)
 print(f"The roots are: {roots}")  
+
+# Part B: Diamond
+
