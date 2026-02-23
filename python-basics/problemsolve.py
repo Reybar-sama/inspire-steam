@@ -1,16 +1,16 @@
 # ASSIGNMENT:
 #> Run the code in your PC to see the game's output... DONE
 #> See the problems below, try to solve them... 
-#> Ensure you can at least solve the first problem
+#> Ensure you can at least solve the first problem... DONE
 
 #PROBLEM 1:
-#> When a character kicks another character, the opponent gets more damage than what the character deals... ???
+#> When a character kicks another character, the opponent gets more damage than what the character deals... DONE
 #> Once this problem is solved, the final health of the warrior after taking damage should be 120... DONE
 
 #PROBLEM 2:
 #> The function to takle other opponents is not defined... DONE
 #> Solve the method, then let the warrior character takle the ninja character... DONE
-#In both cases use the report_status methods to verify of damages are done... ???
+#In both cases use the report_status methods to verify of damages are done... DONE
 
 class FighterCharacter:
 
