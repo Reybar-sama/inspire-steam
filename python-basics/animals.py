@@ -24,6 +24,11 @@ class Dog(Animal):
         self.breed = breed
 
     def barks(self):
-        print(f"The dog")
+        print(f"The dog says King Kunta")
 
 class Horse(Animal):
+    def __init__(self, color, height, breed):
+        super().__init__ (species, weight, food)
+
+    def neigh(self):
+        print(f"The horse says nihhhga")
