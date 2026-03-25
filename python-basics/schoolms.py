@@ -1,36 +1,97 @@
 # Name : Rey Bar
 # Date : 23/02/2026
-# Program to record and display student details in Python & Excel
+# Program to record and display student details in Python & text doc
 
 
-def main_menu():
-    print("\n****** STUDENT SCHOOL MEMBERSHIP SYSTEM ******")
-    print("1. Register New Student")
-    print("2. Display existing students and student data")
-    print("3. Exit")
-    
+import tkinter as tk
+from tkinter import ttk, messagebox, filedialog
 
-def new_student():
-    while True:
-        print("\n-- New Student Info --")
-        print = input(f"Enter Student ID: ")
-        print = input(f"Enter Student Name: ")
-        print = input(f"Enter Current Course: ")
-        print = int(input(f"Enter Student Phone: "))
+class SchoolManagementSystem: # the program's backbone essentially
+    def __init__(self, root):
+        self.root = root
+        self.root.title("School Management System")
+        self.root.geometry("900x500")
 
-        choice = input("Enter option: ").strip().lower()
+        # Data storage
+        self.student_list = []
 
-    if choice == "B":
-        import name_lib
+        # UI Components
+        self.setup_ui()
 
-        print(f"Students: {len(name_lib.first_names)}")
+    def setup_ui(self):
+        # --- Input Frame ---
+        input_frame = tk.LabelFrame(self.root, text="Student Details", padx=10, pady=10)
+        input_frame.pack(side="left", fill="y", padx=20, pady=20)
 
-        full_name = name_lib.get_full_name("Davis", "McClean")
-        print(f"Full names: {full_name}")
+        fields = [("Student ID:", "id"), ("First Name:", "fname"), 
+                  ("Last Name:", "lname"), ("Courses:", "course"), ("Phone:", "phone")]
+        
+        self.entries = {}
+        for i, (label_text, key) in enumerate(fields):
+            tk.Label(input_frame, text=label_text).grid(row=i, column=0, sticky="w", pady=5)
+            entry = tk.Entry(input_frame)
+            entry.grid(row=i, column=1, pady=5, padx=5)
+            self.entries[key] = entry
 
-        all_names = name_library.get_all_full_names()
-        print(f"All students: {len(all_names)}")
+        # Buttons
+        tk.Button(input_frame, text="Add Student", command=self.add_student, bg="#4CAF50", fg="white").grid(row=6, column=0, columnspan=2, pady=10, sticky="ew")
+        tk.Button(input_frame, text="Export to Text", command=self.export_to_txt, bg="#2196F3", fg="white").grid(row=7, column=0, columnspan=2, pady=5, sticky="ew")
+        tk.Button(input_frame, text="Clear Fields", command=self.clear_entries).grid(row=8, column=0, columnspan=2, pady=5, sticky="ew")
 
-    elif choice == "C":
-        print("Exiting program...")
-        quit()
+        # --- Display Frame ---
+        display_frame = tk.Frame(self.root)
+        display_frame.pack(side="right", fill="both", expand=True, padx=20, pady=20)
+
+        # Treeview for table display
+        columns = ("ID", "First Name", "Last Name", "Courses", "Phone")
+        self.tree = ttk.Treeview(display_frame, columns=columns, show="headings")
+        
+        for col in columns:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=100)
+
+        self.tree.pack(fill="both", expand=True)
+
+    def add_student(self):
+        # Gather data
+        data = {k: v.get() for k, v in self.entries.items()}
+        
+        # Simple validation
+        if not all(data.values()):
+            messagebox.showwarning("Input Error", "Please fill in all fields!")
+            return
+
+        # Add to internal list and UI
+        self.student_list.append(data)
+        self.tree.insert("", "end", values=(data['id'], data['fname'], data['lname'], data['course'], data['phone']))
+        
+        self.clear_entries()
+        messagebox.showinfo("Success", "Student added successfully!")
+
+    def clear_entries(self):
+        for entry in self.entries.values():
+            entry.delete(0, tk.END)
+
+    def export_to_txt(self):
+        if not self.student_list:
+            messagebox.showwarning("Export Error", "The student list is empty!")
+            return
+
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
+        
+        if file_path:
+            try:
+                with open(file_path, "w") as f:
+                    f.write(f"{'ID':<10} | {'First Name':<15} | {'Last Name':<15} | {'Course':<20} | {'Phone':<15}\n")
+                    f.write("-" * 80 + "\n")
+                    for s in self.student_list:
+                        f.write(f"{s['id']:<10} | {s['fname']:<15} | {s['lname']:<15} | {s['course']:<20} | {s['phone']:<15}\n")
+                
+                messagebox.showinfo("Export Successful", f"Data saved to {file_path}")
+            except Exception as e:
+                messagebox.showerror("Error", f"Could not save file: {e}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = SchoolManagementSystem(root)
+    root.mainloop()

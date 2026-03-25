@@ -8,3 +8,5 @@ fav_sport = "swimming"
 grade = "A"
 hobby = "Coding"
 course = "Software Enginnering"
+
+yes
