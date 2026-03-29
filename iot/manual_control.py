@@ -11,7 +11,7 @@ drone.take_off(5)
 remctrl_speed = 250
 
 while True:
-    key = keyboard.read_key() & 0xff
+    key = keyboard.read_key() 
 
     # get your values to zero
     left_right = 0
@@ -19,23 +19,23 @@ while True:
     up_down = 0
     yaw = 0
 
-    if key == ord("w"):
+    if keyboard.is_pressed("w"):
         forward_backward = remctrl_speed
-    elif key == ord("s"):
+    elif keyboard.is_pressed("s"):
         forward_backward = -remctrl_speed 
-    elif key == ord("a"):
+    elif keyboard.is_pressed("a"):
         left_right = -remctrl_speed
-    elif key == ord("d"):
+    elif keyboard.is_pressed("d"):
         left_right = remctrl_speed
-    elif key == ord("f"):
+    elif keyboard.is_pressed("f"):
         up_down = remctrl_speed
-    elif key == ord("c"):
+    elif keyboard.is_pressed("c"):
         up_down = -remctrl_speed
-    elif key == ord("q"):
+    elif keyboard.is_pressed("q"):
         yaw = -1
-    elif key == ord("e"):
+    elif keyboard.is_pressed("e"):
         yaw = 1
-    elif key == ord("1") or key == 27:
+    elif keyboard.is_pressed("1") or key == 27:
         drone.land()
         time.sleep(2)
         break
